@@ -1,204 +1,385 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Advanced Library Management System</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <button
+      id="sidebarToggle"
+      class="sidebar-toggle"
+      aria-label="Toggle navigation"
+    >
+      <i class="fa-solid fa-bars"></i>
+    </button>
     <div class="dashboard-wrapper">
-        <aside class="sidebar">
-            <div class="brand">
-                <div class="brand-icon"><i class="fa-solid fa-book-bookmark"></i></div>
-                <span>LibroSuite</span>
-            </div>
-            <nav class="navigation">
-                <button class="nav-item active" data-target="overview-tab">
-                    <i class="fa-solid fa-chart-pie"></i> Dashboard
-                </button>
-                <button class="nav-item" data-target="books-tab">
-                    <i class="fa-solid fa-book"></i> Book Inventory
-                </button>
-                <button class="nav-item" data-target="reservations-tab">
-                    <i class="fa-solid fa-calendar-check"></i> Reservations
-                </button>
-                <button class="nav-item" data-target="history-tab">
-                    <i class="fa-solid fa-clock-rotate-left"></i> System Logs
-                </button>
-            </nav>
-            <div class="sidebar-footer">
-                <p>System Status: Active</p>
-            </div>
-        </aside>
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">
+            <i class="fa-solid fa-book-bookmark"></i>
+          </div>
+          <span>Libro.Pro4</span>
+        </div>
+        <nav class="navigation">
+          <button class="nav-item active" data-target="overview-tab">
+            <i class="fa-solid fa-chart-pie"></i> Dashboard
+          </button>
+          <button class="nav-item" data-target="books-tab">
+            <i class="fa-solid fa-book"></i> Book Inventory
+          </button>
+          <button class="nav-item" data-target="reservations-tab">
+            <i class="fa-solid fa-calendar-check"></i> Reservations
+          </button>
+          <button class="nav-item" data-target="history-tab">
+            <i class="fa-solid fa-clock-rotate-left"></i> System Logs
+          </button>
+        </nav>
+        <div class="sidebar-footer">
+          <p>System Status: Active</p>
+          <div
+            style="
+              margin-top: 0.5rem;
+              display: flex;
+              gap: 0.5rem;
+              align-items: center;
+            "
+          >
+            <button id="adminAuthBtn" class="btn btn-secondary">Login</button>
+            <span
+              id="adminBadge"
+              style="font-size: 0.85rem; color: #94a3b8; display: none"
+              >(admin)</span
+            >
+          </div>
+        </div>
+      </aside>
 
-        <main class="main-workspace">
-            <header class="workspace-header">
+      <main class="main-workspace">
+        <header class="workspace-header">
+          <div>
+            <h1 id="view-title">Dashboard Overview</h1>
+            <p class="subtitle">
+              Real-time status of Library Management System
+            </p>
+          </div>
+          <div class="action-cluster">
+            <div class="search-bar">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input
+                type="text"
+                id="globalSearch"
+                placeholder="Search..."
+              />
+            </div>
+            <button class="btn btn-primary" id="openBookModalBtn">
+              <i class="fa-solid fa-plus"></i> Add New Book
+            </button>
+          </div>
+        </header>
+
+        <div id="overview-tab" class="tab-content active">
+          <div class="metrics-grid">
+            <div class="card status-card card-purple">
+              <div class="card-body">
                 <div>
-                    <h1 id="view-title">Dashboard Overview</h1>
-                    <p class="subtitle">Real-time status of university system assets</p>
+                  <h3>Total Books</h3>
+                  <h2 id="metric-total-books">0</h2>
                 </div>
-                <div class="action-cluster">
-                    <div class="search-bar">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" id="globalSearch" placeholder="Search entries dynamically...">
-                    </div>
-                    <button class="btn btn-primary" id="openBookModalBtn">
-                        <i class="fa-solid fa-plus"></i> Add New Asset
-                    </button>
+                <div class="icon-box">
+                  <i class="fa-solid fa-boxes-stacked"></i>
                 </div>
-            </header>
-
-            <div id="overview-tab" class="tab-content active">
-                <div class="metrics-grid">
-                    <div class="card status-card card-purple">
-                        <div class="card-body">
-                            <div>
-                                <h3>Total Inventory</h3>
-                                <h2 id="metric-total-books">0</h2>
-                            </div>
-                            <div class="icon-box"><i class="fa-solid fa-boxes-stacked"></i></div>
-                        </div>
-                    </div>
-                    <div class="card status-card card-green">
-                        <div class="card-body">
-                            <div>
-                                <h3>Available Assets</h3>
-                                <h2 id="metric-avail-books">0</h2>
-                            </div>
-                            <div class="icon-box"><i class="fa-solid fa-circle-check"></i></div>
-                        </div>
-                    </div>
-                    <div class="card status-card card-orange">
-                        <div class="card-body">
-                            <div>
-                                <h3>Active Bookings</h3>
-                                <h2 id="metric-total-res">0</h2>
-                            </div>
-                            <div class="icon-box"><i class="fa-solid fa-hourglass-half"></i></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="data-layout-split">
-                    <div class="card data-card table-panel">
-                        <div class="panel-header">
-                            <h2>Recent Activity Overview</h2>
-                        </div>
-                        <div class="table-scroll">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Asset Name</th>
-                                        <th>Author</th>
-                                        <th>Tracking Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="dashboardQuickView"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
-
-            <div id="books-tab" class="tab-content">
-                <div class="card data-card">
-                    <div class="table-scroll">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Asset ID</th>
-                                    <th>Book Title</th>
-                                    <th>Author Signature</th>
-                                    <th>Status Flag</th>
-                                    <th>Operations</th>
-                                </tr>
-                            </thead>
-                            <tbody id="inventoryTableBody"></tbody>
-                        </table>
-                    </div>
+            <div class="card status-card card-green">
+              <div class="card-body">
+                <div>
+                  <h3>Available Books</h3>
+                  <h2 id="metric-avail-books">0</h2>
                 </div>
-            </div>
-
-            <div id="reservations-tab" class="tab-content">
-                <div class="card data-card">
-                    <div class="table-scroll">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Booking ID</th>
-                                    <th>Book Title</th>
-                                    <th>Authorized User</th>
-                                    <th>Allocation Date</th>
-                                    <th>Operations</th>
-                                </tr>
-                            </thead>
-                            <tbody id="reservationsTableBody"></tbody>
-                        </table>
-                    </div>
+                <div class="icon-box">
+                  <i class="fa-solid fa-circle-check"></i>
                 </div>
+              </div>
             </div>
-
-            <div id="history-tab" class="tab-content">
-                <div class="card data-card">
-                    <div class="panel-header-actions">
-                        <h2>Audit Logs</h2>
-                        <button class="btn btn-danger-text" id="clearLogsBtn"><i class="fa-solid fa-trash-can"></i> Clear History</button>
-                    </div>
-                    <div class="log-stream" id="logStreamContainer"></div>
+            <div class="card status-card card-orange">
+              <div class="card-body">
+                <div>
+                  <h3>Reservation</h3>
+                  <h2 id="metric-total-res">0</h2>
                 </div>
+                <div class="icon-box">
+                  <i class="fa-solid fa-hourglass-half"></i>
+                </div>
+              </div>
             </div>
-        </main>
+          </div>
+
+          <div id="funFactsSection" class="card fun-facts-card">
+            <div class="panel-header">
+              <h2>Book Fun Facts</h2>
+            </div>
+            <ul id="funFactsList" class="fun-facts-list"></ul>
+          </div>
+
+          <div class="data-layout-split">
+            <div class="card data-card table-panel">
+              <div class="panel-header">
+                <h2>Recent Activity Overview</h2>
+              </div>
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Asset Name</th>
+                      <th>Author</th>
+                      <th>Tracking Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashboardQuickView"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="books-tab" class="tab-content">
+          <div class="card data-card">
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Asset ID</th>
+                    <th>Book Title</th>
+                    <th>Author Signature</th>
+                    <th>Status Flag</th>
+                    <th>Operations</th>
+                  </tr>
+                </thead>
+                <tbody id="inventoryTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="reservations-tab" class="tab-content">
+          <div class="card data-card">
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Booking ID</th>
+                    <th>Book Title</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Address</th>
+                    <th>Allocation Date</th>
+                    <th>Operations</th>
+                  </tr>
+                </thead>
+                <tbody id="reservationsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="history-tab" class="tab-content">
+          <div class="card data-card">
+            <div class="panel-header-actions">
+              <h2>Audit Logs</h2>
+              <button class="btn btn-danger-text" id="clearLogsBtn">
+                <i class="fa-solid fa-trash-can"></i> Clear History
+              </button>
+            </div>
+            <div class="log-stream" id="logStreamContainer"></div>
+          </div>
+        </div>
+      </main>
     </div>
 
     <div id="assetModal" class="modal-overlay">
-        <div class="modal-surface">
-            <div class="modal-header">
-                <h2>Register New Book Asset</h2>
-                <button class="close-modal-btn" id="closeAssetModal">&times;</button>
-            </div>
-            <form id="assetForm">
-                <div class="form-group">
-                    <label for="bookTitle">Book Title</label>
-                    <input type="text" id="bookTitle" required placeholder="e.g., Introduction to Algorithms">
-                </div>
-                <div class="form-group">
-                    <label for="bookAuthor">Author</label>
-                    <input type="text" id="bookAuthor" required placeholder="e.g., Thomas H. Cormen">
-                </div>
-                <div class="modal-footer-actions">
-                    <button type="button" class="btn btn-secondary" id="cancelAssetBtn">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Commit Registry</button>
-                </div>
-            </form>
+      <div class="modal-surface">
+        <div class="modal-header">
+          <h2>Register New Book Asset</h2>
+          <button class="close-modal-btn" id="closeAssetModal">&times;</button>
         </div>
+        <form id="assetForm">
+          <div class="form-group">
+            <label for="bookTitle">Book Title</label>
+            <input
+              type="text"
+              id="bookTitle"
+              required
+              placeholder="e.g., Introduction to Algorithms"
+            />
+          </div>
+          <div class="form-group">
+            <label for="bookAuthor">Author</label>
+            <input
+              type="text"
+              id="bookAuthor"
+              required
+              placeholder="e.g., Thomas H. Cormen"
+            />
+          </div>
+          <div class="modal-footer-actions">
+            <button type="button" class="btn btn-secondary" id="cancelAssetBtn">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Commit Registry
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <div id="bookingModal" class="modal-overlay">
-        <div class="modal-surface">
-            <div class="modal-header">
-                <h2>Initialize Resource Reservation</h2>
-                <button class="close-modal-btn" id="closeBookingModal">&times;</button>
-            </div>
-            <form id="bookingForm">
-                <input type="hidden" id="bookingTargetId">
-                <div class="form-group">
-                    <label>Target Asset</label>
-                    <input type="text" id="bookingTargetTitle" readonly class="input-disabled">
-                </div>
-                <div class="form-group">
-                    <label for="patronName">Patron/Student Full Name</label>
-                    <input type="text" id="patronName" required placeholder="e.g., John Doe">
-                </div>
-                <div class="modal-footer-actions">
-                    <button type="button" class="btn btn-secondary" id="cancelBookingBtn">Cancel</button>
-                    <button type="submit" class="btn btn-success">Issue Lock Allocation</button>
-                </div>
-            </form>
+      <div class="modal-surface">
+        <div class="modal-header">
+          <h2>Initialize Resource Reservation</h2>
+          <button class="close-modal-btn" id="closeBookingModal">
+            &times;
+          </button>
         </div>
+        <form id="bookingForm">
+          <input type="hidden" id="bookingTargetId" />
+          <div class="form-group">
+            <label>Target Asset</label>
+            <input
+              type="text"
+              id="bookingTargetTitle"
+              readonly
+              class="input-disabled"
+            />
+          </div>
+          <div class="form-group">
+            <label for="patronName">Customer's Full Name</label>
+            <input
+              type="text"
+              id="patronName"
+              required
+              placeholder="e.g., John Doe"
+            />
+          </div>
+          <div class="form-group">
+            <label for="patronPhone">Mobile Phone Number</label>
+            <input
+              type="tel"
+              id="patronPhone"
+              required
+              placeholder="e.g., +1 555-123-4567"
+            />
+          </div>
+          <div class="form-group">
+            <label for="patronAddress">Address</label>
+            <input
+              type="text"
+              id="patronAddress"
+              required
+              placeholder="e.g., 123 Main St, City, Country"
+            />
+          </div>
+          <div class="modal-footer-actions">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="cancelBookingBtn"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-success">
+              Issue Lock Allocation
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="adminLoginModal" class="modal-overlay">
+      <div class="modal-surface modal-surface--wide">
+        <div class="modal-header">
+          <div>
+            <h2>Admin Access</h2>
+            <p class="modal-subtitle">
+              Sign in or create a new administrator account to manage the app.
+            </p>
+          </div>
+        </div>
+        <form id="adminLoginForm" class="login-modal-form">
+          <div class="form-group">
+            <label for="adminUser">Username</label>
+            <input type="text" id="adminUser" required placeholder="Username" />
+          </div>
+          <div class="form-group">
+            <label for="adminPass">Password</label>
+            <input
+              type="password"
+              id="adminPass"
+              required
+              placeholder="Password"
+            />
+          </div>
+          <div class="modal-footer-actions">
+            <button type="submit" class="btn btn-primary">Sign In</button>
+          </div>
+          <p class="auth-switch-text">
+            Don't have an admin account?
+            <button type="button" id="showSignupLink" class="btn-link">
+              Sign up
+            </button>
+          </p>
+        </form>
+        <form id="adminSignupForm" class="login-modal-form hidden">
+          <div class="form-group">
+            <label for="signupUser">Choose Username</label>
+            <input
+              type="text"
+              id="signupUser"
+              required
+              placeholder="new admin username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="signupPass">Choose Password</label>
+            <input
+              type="password"
+              id="signupPass"
+              required
+              placeholder="new admin password"
+            />
+          </div>
+          <div class="form-group">
+            <label for="signupConfirmPass">Confirm Password</label>
+            <input
+              type="password"
+              id="signupConfirmPass"
+              required
+              placeholder="confirm password"
+            />
+          </div>
+          <div class="modal-footer-actions">
+            <button type="submit" class="btn btn-primary">Create Admin</button>
+          </div>
+          <p class="auth-switch-text">
+            Already have an admin account?
+            <button type="button" id="showLoginLink" class="btn-link">
+              Sign in
+            </button>
+          </p>
+        </form>
+      </div>
     </div>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
